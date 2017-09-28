@@ -199,14 +199,19 @@ func maxHeapify(A:inout [Int], index:Int) {
     }
 }
 
+//建立最大堆
+func buildMaxHeap(A:inout [Int]) {
+    for index in 1...A.count / 2 {
+        maxHeapify(A: &A, index: A.count / 2 - index)
+    }
+}
+
 var heapA = [16, 4, 10, 14, 7, 9, 3, 2, 8, 1];
 print(heapA)
-for index in 0..<heapA.count {
-    maxHeapify(A: &heapA, index: index)
-}
+buildMaxHeap(A: &heapA)
 print(heapA)
 
-
+//堆排序算法 89-158
 
 
 
