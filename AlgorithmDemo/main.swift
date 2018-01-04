@@ -211,13 +211,51 @@ print(heapA)
 buildMaxHeap(A: &heapA)
 print(heapA)
 
-//堆排序算法 89-158
+//快速排序
 
+/// 数组划分，找到小标q A[p..r]为A[p..q-1]和A[q+1..r],使得A[p..q-1]中的每一个元素小于等于A[q],而A[q]小于等于A[q+1..r]中的每个元素
+///
+/// - Parameter A: 排序的数组
+/// - Parameter p: 排序开始位置
+/// - Parameter r: 排序结束位置
+/// - Returns: 返回数组划分的小标q
+func partition(A:inout [Int], p: Int, r: Int) -> Int {
+    let x = A[r]
+    var i = p
+    for j in p..<r {
+        if A[j] <= x {
+            i += 1
+            // 第i个元素和第j个元素交换
+            let temp = A[j]
+            A[j] = A[i - 1]
+            A[i - 1] = temp
+        }
+    }
+    // 第i + 1个元素和最后一个元素交换
+    let temp = A[i]
+    A[i] = A[r]
+    A[r] = temp
+    return i
+}
 
+/// 递归调用快速排序
+///
+/// - Parameter A: 排序数组
+func quickSort(A:inout [Int], p: Int, r: Int) {
+    if p < r {
+        let q = partition(A: &A, p: p, r: r)
+        quickSort(A: &A, p: p, r: q - 1)
+        quickSort(A: &A, p: q + 1, r: r)
+    }
+    print("quickSort current change \(A)")
+}
 
+var quickSortA = [2, 8, 7, 1, 3, 5, 6, 4, 80, 11, 29]
+print(quickSortA)
+quickSort(A: &quickSortA, p: 0, r: quickSortA.count - 1)
+print(quickSortA)
 
-
-
+//线性时间排序 108-191
 
 
 
