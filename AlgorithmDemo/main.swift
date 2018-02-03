@@ -255,14 +255,72 @@ print(quickSortA)
 quickSort(A: &quickSortA, p: 0, r: quickSortA.count - 1)
 print(quickSortA)
 
-//线性时间排序 108-191
+//线性时间排序
+//记数排序 (基数排序)
 
+func countingSort(A:inout [Int], B:inout [Int], k: Int) {
+    var C: [Int] = []
+    for _ in 0...k {
+        C.append(0)
+    }
+    for j in 0..<A.count {
+        C[A[j]] = C[A[j]] + 1
+    }
+    // C[i] now contains the number of elements equal to i.
+    for i in 1...k {
+        C[i] = C[i] + C[i - 1]
+    }
+    // C[i] now contains the number of elements less than or equal to i.
+    for j in 1...A.count {
+        let revert = A.count - j
+        B[C[A[revert]]] = A[revert]
+        C[A[revert]] = C[A[revert]] - 1
+    }
+}
 
+var countingSortA = [2, 5, 3, 0, 2, 3, 0, 3]
+var outPutB: [Int] = []
+for _ in 0...countingSortA.count {
+    outPutB.append(0)
+}
+countingSort(A: &countingSortA, B: &outPutB, k: 5)
+print(outPutB)
 
+// 桶排序
+func bucketSort(A:inout [Float]) {
+    let n = A.count
+    var B: [Float] = []
+    for _ in 0..<n {
+        B.append(0)
+    }
+    for i in 1...n {
+//        inset A[i] into list B[「n * A[i]」]
+    }
+    for i in 0..<n {
+//        sort list B[i] with insertion sort
+    }
+//    contatenate the lists B[0], B[1],...,B[n - 1] together in order
+}
 
+// 中位数和顺序统计量
+/// 找到数组A【p..r】中第i小的元素
+func randomizedSelect(A:inout [Int], p: Int, r: Int, i: Int) -> Int {
+    if p == r {
+        return A[p]
+    }
+    let q = partition(A: &A, p: p, r: r)
+    let k = q - p + 1
+    if i == k {
+        return A[q]
+    } else if i < k {
+        return randomizedSelect(A: &A, p: p, r: q - 1 , i: i)
+    } else {
+        return randomizedSelect(A: &A, p: q + 1, r: r , i: i - k)
+    }
+}
 
-
-
+// 数据结构
+// 基本数据结构 栈和队列 132 - 238
 
 
 
